@@ -1,9 +1,0 @@
-targets:
-  - name: example
-    url: https://example.com
-    enabled: true
-
-scraping:
-  delay_seconds: 1
-  save_html: true
-  output_format: json

@@ -1,35 +1,16 @@
-# Web Scraping Workspace
+# Web Scraping TRUCK
 
-A structured Python workspace for building and maintaining web scraping projects.
+Projet data simple, lisible et bien organise pour recuperer des annonces de camions depuis TruckScout24, les nettoyer, puis les visualiser dans un dashboard interactif.
 
-## Structure
+## Demarrage rapide
 
-- `src/`: scraping logic and shared utilities
-- `scripts/`: runnable entrypoints
-- `config/`: project configuration templates
-- `data/raw/`: unmodified scraped data
-- `data/processed/`: cleaned or transformed data
-- `data/external/`: third-party input files
-- `logs/`: runtime logs
-- `tests/`: basic test coverage
-- `notebooks/`: exploration and analysis
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r truck_project/requirements.txt
+python3 truck_project/scripts/scrape_trucks.py --pages 10 --pause 0
+python3 truck_project/scripts/clean_trucks.py
+streamlit run truck_project/scripts/dashboard.py
+```
 
-## Quick Start
-
-1. Create a virtual environment:
-   `python3 -m venv .venv`
-2. Activate it:
-   `source .venv/bin/activate`
-3. Install dependencies:
-   `pip install -e .`
-4. Copy the environment template if needed:
-   `cp .env.example .env`
-5. Run the starter scraper:
-   `python scripts/run_scraper.py`
-
-## Notes
-
-- Keep raw responses in `data/raw/`.
-- Write cleaned outputs to `data/processed/`.
-- Store reusable selectors, headers, or target URLs in `config/`.
-- Add project-specific spiders or parsers under `src/`.
+Le scraper s'arrete automatiquement quand il n'y a plus de pages disponibles.

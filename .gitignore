@@ -1,6 +1,5 @@
 __pycache__/
 *.py[cod]
-*.egg-info/
 .venv/
 .env
 .pytest_cache/
@@ -10,17 +9,5 @@ __pycache__/
 coverage.xml
 htmlcov/
 
-# Keep folder structure, ignore generated contents
-logs/*
-!logs/.gitkeep
-
-data/raw/*
-!data/raw/.gitkeep
-
-data/processed/*
-!data/processed/.gitkeep
-
-data/external/*
-!data/external/.gitkeep
-
-notebooks/.ipynb_checkpoints/
+# Generated project files
+truck_project/data/*.csv
