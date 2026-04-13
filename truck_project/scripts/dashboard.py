@@ -1,47 +1,47 @@
 from __future__ import annotations
+
 from pathlib import Path
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-# Chemin vers les données
+
 DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "truck_data_clean.csv"
 
 
 @st.cache_data
 def load_data() -> pd.DataFrame:
-    """Charge les données nettoyées"""
     if not DATA_PATH.exists():
         return pd.DataFrame()
     return pd.read_csv(DATA_PATH)
 
 
-def apply_filters(df: pd.DataFrame) -> pd.DataFrame:
-    """Applique les filtres sélectionnés dans la sidebar"""
-    manufacturers = sorted(df["manufacturer"].dropna().unique())
-    years = sorted(df["year"].dropna().unique())
-    fuels = sorted(df["fuel_type"].dropna().unique())
+def main() -> None:
+    st.set_page_config(page_title="Truck Dashboard", layout="wide")
+    st.title("Dashboard des annonces de camions")
+
+    df = load_data()
+    if df.empty:
+        st.warning("Le fichier nettoye est vide ou introuvable. Lance d'abord le scraping puis le nettoyage.")
+        return
+
+    manufacturers = sorted(df["manufacturer"].dropna().unique().tolist())
+    years = sorted([int(year) for year in df["year"].dropna().unique().tolist()])
+    fuels = sorted(df["fuel_type"].dropna().unique().tolist())
 
     st.sidebar.header("Filtres")
+    selected_manufacturers = st.sidebar.multiselect("Marque", manufacturers, default=manufacturers)
+    selected_years = st.sidebar.multiselect("Annee", years, default=years)
+    selected_fuels = st.sidebar.multiselect("Carburant", fuels, default=fuels)
 
-    selected_manufacturers = st.sidebar.multiselect(
-        "Marque", manufacturers, default=manufacturers
-    )
-    selected_years = st.sidebar.multiselect(
-        "Année", years, default=years
-    )
-    selected_fuels = st.sidebar.multiselect(
-        "Carburant", fuels, default=fuels
-    )
-
-    return df[
+    filtered_df = df[
         df["manufacturer"].isin(selected_manufacturers)
         & df["year"].isin(selected_years)
         & df["fuel_type"].isin(selected_fuels)
     ].copy()
 
-
-total_ads = int(len(filtered_df))
+    total_ads = int(len(filtered_df))
     avg_price = float(filtered_df["price"].dropna().mean()) if total_ads else 0.0
     avg_mileage = float(filtered_df["mileage"].dropna().mean()) if total_ads else 0.0
 

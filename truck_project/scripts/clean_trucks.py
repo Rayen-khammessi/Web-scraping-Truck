@@ -1,4 +1,4 @@
-from _future_ import annotations
+from __future__ import annotations
 
 import re
 from pathlib import Path
@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 
-BASE_DIR = Path(_file_).resolve().parents[1]
+BASE_DIR = Path(__file__).resolve().parents[1]
 RAW_PATH = BASE_DIR / "data" / "truck_data_raw.csv"
 CLEAN_PATH = BASE_DIR / "data" / "truck_data_clean.csv"
 
