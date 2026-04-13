@@ -40,6 +40,7 @@ def apply_filters(df: pd.DataFrame) -> pd.DataFrame:
         & df["fuel_type"].isin(selected_fuels)
     ].copy()
 
+
 total_ads = int(len(filtered_df))
     avg_price = float(filtered_df["price"].dropna().mean()) if total_ads else 0.0
     avg_mileage = float(filtered_df["mileage"].dropna().mean()) if total_ads else 0.0
