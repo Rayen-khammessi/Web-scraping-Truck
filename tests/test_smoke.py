@@ -1,10 +1,10 @@
-from _future_ import annotations
+from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(_file_).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def load_module(relative_path: str, module_name: str):
